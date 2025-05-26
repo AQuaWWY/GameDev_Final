@@ -21,13 +21,26 @@ public class picker : MonoBehaviour
     {
         for (int i = 0; i < 1; i++)
         {
+            GameObject prefab;
             // 随机选择一个预制体
-            GameObject prefab = prefabs[Random.Range(0, prefabs.Length)];
+            int x = Random.Range(0, 100);
+            if(x / 10 < 8)
+            {
+                prefab = prefabs[0];
+            }
+            else if(x / 10 == 8)
+            {
+                prefab = prefabs[1];
+            }
+            else
+            {
+                prefab = prefabs[2];
+            }
 
             // 随机生成位置
             Vector3 randomPosition = new Vector3(
             Random.Range(-range_x / 2, range_x / 2),
-            0,
+            1,
             Random.Range(-range_z / 2 + obj.transform.position.z + 30f, range_z / 2 + obj.transform.position.z + 30f)
             );
 

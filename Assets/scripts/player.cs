@@ -14,6 +14,15 @@ public class NewBehaviourScript : MonoBehaviour
     {
         m_transform = this.transform;
     }
+    void OnTriggerEnter(Collider coll)
+    {
+        if(coll.gameObject.tag == "Item")
+        {
+            GameObject collidedWith = coll.gameObject;
+            // 销毁碰撞到的物体
+            Destroy(collidedWith);
+        }
+    }
 
     // 每帧更新
     void Update()
