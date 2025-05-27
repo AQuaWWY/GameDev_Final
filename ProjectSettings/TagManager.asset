@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Item
+  - damage
+  - Road
+  - Heal
   layers:
   - Default
   - TransparentFX
