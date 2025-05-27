@@ -56,7 +56,7 @@ public class NewBehaviourScript : MonoBehaviour
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
         }
-        else if (coll.gameObject.transform.root.gameObject.tag == "Road")
+        else if (coll.tag == "Road")
         {
             Debug.Log("道路");
         }
