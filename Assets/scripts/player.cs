@@ -30,7 +30,7 @@ public class NewBehaviourScript : MonoBehaviour
     void OnTriggerEnter(Collider coll)
     {
         Debug.Log("发生碰撞");
-        if(coll.gameObject.tag == "Item") //得分
+        if(coll.gameObject.transform.root.gameObject.tag == "Item") //得分
         {
             current_score++;
             score_text.text = "current score: " + current_score.ToString();
@@ -38,7 +38,7 @@ public class NewBehaviourScript : MonoBehaviour
             // 销毁碰撞到的物体
             Destroy(collidedWith);
         }
-        else if(coll.gameObject.tag == "Heal") //回血
+        else if(coll.gameObject.transform.root.gameObject.tag == "Heal") //回血
         {
             current_health++;
             rest_text.text = "rest: " + current_health.ToString();
@@ -46,15 +46,20 @@ public class NewBehaviourScript : MonoBehaviour
             // 销毁碰撞到的物体
             Destroy(collidedWith);
         }
-        else if(coll.gameObject.tag == "damage")
+        else if(coll.gameObject.transform.root.gameObject.tag == "damage")
         {
             Debug.Log("碰到障碍物");
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
         }
+        else if (coll.gameObject.transform.root.gameObject.tag == "Road")
+        {
+            Debug.Log("碰到地面");
+        }
         else
         {
             Debug.Log("默认为障碍物");
+            Debug.Log(coll);
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
         }

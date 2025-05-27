@@ -810,7 +810,9 @@ MonoBehaviour:
   speed: 7
   speed_forword: 10
   m_transform: {fileID: 0}
-  edge: 5
+  edge: 7
+  current_score: 0
+  current_health: 3
 --- !u!54 &1351951905
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -979,6 +981,10 @@ PrefabInstance:
     - target: {fileID: 2961651223290161602, guid: a2449b491edddc44cb6854c8629e75bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2994821560887805026, guid: a2449b491edddc44cb6854c8629e75bf, type: 3}
+      propertyPath: m_TagString
+      value: Road
       objectReference: {fileID: 0}
     - target: {fileID: 5286662094282098651, guid: a2449b491edddc44cb6854c8629e75bf, type: 3}
       propertyPath: m_Name
