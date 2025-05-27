@@ -5,18 +5,22 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public float speed = 2f; // ¿ØÖÆ×óÓÒÒÆ¶¯ËÙ¶È
-    public float speed_forword = 2f; // ¿ØÖÆÏòÇ°ÒÆ¶¯ËÙ¶È
+    public float speed = 2f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½
+    public float speed_forword = 2f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½
     public Transform m_transform;
     public float edge = 5f;
-    public int current_score = 0; //·ÖÊı
-    public int current_health = 3; //ÉúÃüÖµ
+    public int current_score = 0; //ï¿½ï¿½ï¿½ï¿½
+    public int current_health = 3; //ï¿½ï¿½ï¿½ï¿½Öµ
     GameObject rest;
     GameObject score;
     TextMeshProUGUI rest_text;
     TextMeshProUGUI score_text;
+    
+    [Header("Game End Settings")]
+    public EndPanel endPanelManager; // åœ¨Inspectorä¸­æ‹–æ‹½æ‹¥æœ‰EndPanelè„šæœ¬çš„å¯¹è±¡åˆ°è¿™é‡Œ
+    public string finishLineTag = "FinishLine"; // å®šä¹‰ç»ˆç‚¹çº¿çš„æ ‡ç­¾
 
-    // ³õÊ¼»¯
+    // ï¿½ï¿½Ê¼ï¿½ï¿½
     void Start()
     {
         m_transform = this.transform;
@@ -29,47 +33,62 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void OnTriggerEnter(Collider coll)
     {
-        Debug.Log("·¢ÉúÅö×²");
-        if(coll.gameObject.transform.root.gameObject.tag == "Item") //µÃ·Ö
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²");
+        if(coll.gameObject.transform.root.gameObject.tag == "Item") //ï¿½Ã·ï¿½
         {
             current_score++;
             score_text.text = "current score: " + current_score.ToString();
             GameObject collidedWith = coll.gameObject;
-            // Ïú»ÙÅö×²µ½µÄÎïÌå
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Destroy(collidedWith);
         }
-        else if(coll.gameObject.transform.root.gameObject.tag == "Heal") //»ØÑª
+        else if(coll.gameObject.transform.root.gameObject.tag == "Heal") //ï¿½ï¿½Ñª
         {
             current_health++;
             rest_text.text = "rest: " + current_health.ToString();
             GameObject collidedWith = coll.gameObject;
-            // Ïú»ÙÅö×²µ½µÄÎïÌå
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Destroy(collidedWith);
         }
         else if(coll.gameObject.transform.root.gameObject.tag == "damage")
         {
-            Debug.Log("Åöµ½ÕÏ°­Îï");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½");
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
         }
         else if (coll.gameObject.transform.root.gameObject.tag == "Road")
         {
-            Debug.Log("Åöµ½µØÃæ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        }
+        // ç¢°æ’åˆ°ç»ˆç‚¹çº¿çš„é€»è¾‘
+        else if (coll.gameObject.CompareTag(finishLineTag))
+        {
+            Debug.Log("Player reached the finish line!");
+            if (endPanelManager != null)
+            {
+                endPanelManager.TriggerEndSequence();
+                // (å¯é€‰) å¯ä»¥åœ¨è¿™é‡Œç¦ç”¨ç©å®¶çš„ç§»åŠ¨è„šæœ¬ï¼Œé˜²æ­¢æ¸¸æˆæš‚åœåè¿˜èƒ½é€šè¿‡æŸäº›æ–¹å¼ç§»åŠ¨
+                this.enabled = false; 
+            }
+            else
+            {
+                Debug.LogError("Reached finish line, but EndPanelManager is not set on Player!");
+            }
         }
         else
         {
-            Debug.Log("Ä¬ÈÏÎªÕÏ°­Îï");
+            Debug.Log("Ä¬ï¿½ï¿½Îªï¿½Ï°ï¿½ï¿½ï¿½");
             Debug.Log(coll);
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
         }
     }
 
-    // Ã¿Ö¡¸üĞÂ
+    // Ã¿Ö¡ï¿½ï¿½ï¿½ï¿½
     void Update()
     {
         Vector3 pos = m_transform.position;
-        // Ïò×óÒÆ¶¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
         if (Input.GetKey(KeyCode.A))
         {
             if(pos.x<=-edge)
@@ -82,7 +101,7 @@ public class NewBehaviourScript : MonoBehaviour
             }
         }
 
-        // ÏòÓÒÒÆ¶¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
         if (Input.GetKey(KeyCode.D))
         {
             if (pos.x >= edge)
@@ -95,16 +114,16 @@ public class NewBehaviourScript : MonoBehaviour
             }
         }
 
-        // ³ÖĞøÏòÇ°ÒÆ¶¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Æ¶ï¿½
         m_transform.Translate(Vector3.forward * Time.deltaTime * speed_forword);
 
-        //// ÏòÇ°ÒÆ¶¯
+        //// ï¿½ï¿½Ç°ï¿½Æ¶ï¿½
         //if (Input.GetKey(KeyCode.W))
         //{
         //    m_transform.Translate(Vector3.forward * Time.deltaTime * speed);
         //}
 
-        //// ÏòºóÒÆ¶¯
+        //// ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
         //if (Input.GetKey(KeyCode.S))
         //{
         //    m_transform.Translate(Vector3.back * Time.deltaTime * speed);
