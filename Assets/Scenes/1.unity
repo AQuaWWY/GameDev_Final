@@ -399,6 +399,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08726c1456937a84ca72aa1a979b91d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localOffsetY: 5
+  localOffsetZ: -5
+  worldAnchorX: 0
+  parallaxStrengthX: 0.5
+  smoothSpeed: 5
 --- !u!114 &492823920
 MonoBehaviour:
   m_ObjectHideFlags: 0
