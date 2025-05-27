@@ -33,32 +33,32 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void OnTriggerEnter(Collider coll)
     {
-        Debug.Log("������ײ");
-        if(coll.gameObject.transform.root.gameObject.tag == "Item") //�÷�
+        Debug.Log("发生碰撞");
+        if(coll.gameObject.transform.root.gameObject.tag == "Item") //得分
         {
             current_score++;
             score_text.text = "current score: " + current_score.ToString();
             GameObject collidedWith = coll.gameObject;
-            // ������ײ��������
+            // 销毁
             Destroy(collidedWith);
         }
-        else if(coll.gameObject.transform.root.gameObject.tag == "Heal") //��Ѫ
+        else if(coll.gameObject.transform.root.gameObject.tag == "Heal") //回血
         {
             current_health++;
             rest_text.text = "rest: " + current_health.ToString();
             GameObject collidedWith = coll.gameObject;
-            // ������ײ��������
+            // 销毁
             Destroy(collidedWith);
         }
-        else if(coll.gameObject.transform.root.gameObject.tag == "damage")
+        else if(coll.tag == "damage")
         {
-            Debug.Log("�����ϰ���");
+            Debug.Log("障碍物");
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
         }
         else if (coll.gameObject.transform.root.gameObject.tag == "Road")
         {
-            Debug.Log("��������");
+            Debug.Log("道路");
         }
         // 碰撞到终点线的逻辑
         else if (coll.gameObject.CompareTag(finishLineTag))
@@ -77,7 +77,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Ĭ��Ϊ�ϰ���");
+            Debug.Log("其他碰撞，待检测");
             Debug.Log(coll);
             current_health--;
             rest_text.text = "rest: " + current_health.ToString();
