@@ -9,6 +9,8 @@ TagManager:
   - Road
   - Heal
   - FinishLine
+  - Stilts
+  - LowObstacle
   layers:
   - Default
   - TransparentFX
