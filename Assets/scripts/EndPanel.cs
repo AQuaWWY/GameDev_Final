@@ -7,7 +7,7 @@ using UnityEngine.UI;            // 如果你想通过代码控制按钮等UI元
 public class EndPanel : MonoBehaviour
 {
     public GameObject endPanelUI; // 在Inspector中拖拽你的结束面板UI对象到这里
-    
+    public Text resultText; // 显示结果的文本组件
     // public Button restartButton;
     // public Button quitButton;
 
@@ -35,7 +35,7 @@ public class EndPanel : MonoBehaviour
     }
 
     // 公共方法，由其他脚本调用来触发结束面板
-    public void TriggerEndSequence()
+    public void TriggerEndSequence(bool isFailure = false)
     {
         if (endPanelUI != null)
         {
@@ -49,6 +49,17 @@ public class EndPanel : MonoBehaviour
         Cursor.visible = true;
 
         Debug.Log("Game Over! End Panel Triggered.");
+        if (resultText != null)
+        {
+            if (isFailure)
+            {
+                resultText.text = "游戏失败!";
+            }
+            else
+            {
+                resultText.text = "恭喜通关!";
+            }
+        }
     }
 
     // --- (可选) 以下是给UI按钮调用的方法 ---
