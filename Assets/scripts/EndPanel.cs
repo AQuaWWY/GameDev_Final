@@ -8,8 +8,6 @@ public class EndPanel : MonoBehaviour
 {
     public GameObject endPanelUI; // 在Inspector中拖拽你的结束面板UI对象到这里
     public Text resultText; // 显示结果的文本组件
-    // public Button restartButton;
-    // public Button quitButton;
 
     void Start()
     {
@@ -22,16 +20,7 @@ public class EndPanel : MonoBehaviour
         {
             Debug.LogError("EndPanelUI is not assigned in the EndPanel script!");
         }
-
-        // (可选) 如果有按钮，可以在这里添加监听器
-        // if (restartButton != null)
-        // {
-        //     restartButton.onClick.AddListener(RestartGame);
-        // }
-        // if (quitButton != null)
-        // {
-        //     quitButton.onClick.AddListener(QuitGame);
-        // }
+        
     }
 
     // 公共方法，由其他脚本调用来触发结束面板
@@ -62,8 +51,6 @@ public class EndPanel : MonoBehaviour
         }
     }
 
-    // --- (可选) 以下是给UI按钮调用的方法 ---
-
     public void RestartGame()
     {
         Time.timeScale = 1f; // 恢复游戏时间
@@ -71,9 +58,10 @@ public class EndPanel : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void QuitGame()
+    public void MainMenu()
     {
-        Debug.Log("Quitting Game...");
-        Application.Quit(); // 在编辑器中可能不会立即生效，但在构建版本中会退出
+        Time.timeScale = 1f; // 恢复游戏时间
+        // 重新加载当前场景
+        SceneManager.LoadScene("mainMenu");
     }
 }
