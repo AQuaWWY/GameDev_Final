@@ -171,8 +171,6 @@ public class NewPlayer : MonoBehaviour
         m_transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
     }
 
-    // 【新增】更新高跷状态和视觉效果的函数
-    // 【重点修改】这个函数变得更简单了！
     void UpdateStiltState()
     {
         // 1. 计算玩家新的目标Y轴高度 (这部分不变)
@@ -182,18 +180,11 @@ public class NewPlayer : MonoBehaviour
         if (stiltLevel > 0)
         {
             stiltVisual.gameObject.SetActive(true);
-
-            // 我们要让高跷的总高度 = 玩家脚下到地面的距离。
-            // 在我们的新结构中，玩家的Y坐标就是高跷需要延伸的总高度。
-            // 我们只需要设置 StiltPivot 的 Y 轴缩放即可。
+            
             float totalStiltHeight = targetY; 
-        
-            // 直接设置 StiltPivot 的缩放。因为其子对象(圆柱体)的顶部在轴心点，
-            // 所以缩放 StiltPivot 就会让圆柱体从玩家脚下向下变长。
+
             stiltVisual.localScale = new Vector3(initialStiltScale.x, totalStiltHeight, initialStiltScale.z);
-        
-            // 【删除】不再需要手动计算和设置 localPosition 了！
-            // stiltVisual.localPosition = new Vector3(0, -stiltModelYPos, 0); // 这行代码可以删掉了
+
         }
         else
         {
@@ -213,7 +204,7 @@ public class NewPlayer : MonoBehaviour
     {
         if (rest_text != null) rest_text.text = "Health: " + current_health.ToString();
     }
-    // 【新增】更新高跷UI的函数
+    
     void UpdateStiltUI()
     {
         if (stilt_text != null) stilt_text.text = "高跷高度: " + stiltLevel.ToString();
