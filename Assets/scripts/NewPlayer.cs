@@ -65,6 +65,7 @@ public class NewPlayer : MonoBehaviour
         // --- 拾取高跷道具 ---
         if (coll.gameObject.CompareTag("Stilts"))
         {
+            SFXManager.Instance.PlaySound("pick");
             stiltLevel++;
             UpdateStiltState();
             Destroy(coll.gameObject);
@@ -88,6 +89,7 @@ public class NewPlayer : MonoBehaviour
         // --- 得分 ---
         else if (coll.gameObject.CompareTag("Item"))
         {
+            SFXManager.Instance.PlaySound("pick");
             current_score++;
             UpdateScoreUI();
             Destroy(coll.gameObject);
@@ -95,6 +97,7 @@ public class NewPlayer : MonoBehaviour
         // --- 回血 ---
         else if (coll.gameObject.CompareTag("Heal"))
         {
+            SFXManager.Instance.PlaySound("pick");
             current_health++;
             UpdateHealthUI();
             Destroy(coll.gameObject);
@@ -124,6 +127,7 @@ public class NewPlayer : MonoBehaviour
     // 【新增】一个统一的受伤函数，方便调用
     void TakeDamage()
     {
+        SFXManager.Instance.PlaySound("hit"); // 播放受伤音效
         Debug.Log("玩家受到伤害！");
         current_health--;
         UpdateHealthUI();
@@ -144,10 +148,12 @@ public class NewPlayer : MonoBehaviour
         // --- 跑道切换输入检测 ---
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && currentLane > 0)
         {
+            SFXManager.Instance.PlaySound("jump");
             currentLane--;
         }
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && currentLane < 2)
         {
+            SFXManager.Instance.PlaySound("jump");
             currentLane++;
         }
 
