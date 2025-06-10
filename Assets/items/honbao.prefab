@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: -7154808080099026397}
   - component: {fileID: -2134220349311143444}
   - component: {fileID: 189920988999848448}
+  - component: {fileID: 4336241362927166347}
   m_Layer: 10
   m_Name: honbao
   m_TagString: Item
@@ -262,3 +263,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9698533, y: 1.5506973, z: 0.23494704}
   m_Center: {x: 0.015073359, y: -0.010532379, z: 0.053471692}
+--- !u!114 &4336241362927166347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5173971085435110321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a68f2167d74044486133747b8bbbfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

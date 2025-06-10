@@ -2,36 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; // 如果你想通过代码控制按钮等UI元素
+using UnityEngine.UI;
 
 public class NewPlayer : MonoBehaviour
 {
     [Header("玩家移动参数")]
-    public float laneChangeSpeed = 10f; // 切换跑道的速度
-    public float forwardSpeed = 5f; // 向前移动的速度
-    public float laneDistance = 2.5f; // 两条跑道之间的距离
+    public float laneChangeSpeed = 10f;
+    public float forwardSpeed = 5f;
+    public float laneDistance = 2.5f;
 
     private Transform m_transform;
-    private int currentLane = 1; // 当前跑道索引 (0: 左, 1: 中, 2: 右)
-    private float targetX; // 【新增】目标X位置，用于平滑移动
+    private int currentLane = 1;
+    private float targetX;
 
     [Header("游戏状态")]
-    public int current_score = 0; //分数
-    public int current_health = 3; //生命值
+    public int current_score = 0;
+    public int current_health = 3;
 
-    // 【新增】高跷相关参数
     [Header("高跷设置")]
-    public int stiltLevel = 0; // 当前高跷的层数
-    public float heightPerStilt = 0.5f; // 每层高跷增加的高度
-    public float stiltChangeSpeed = 15f; // 升高或降低的速度
-    public Transform stiltVisual; // 在Inspector中拖拽玩家脚下的高跷视觉模型
-    private float targetY; // 目标Y轴高度
-    private Vector3 initialStiltScale; // 高跷模型的初始缩放
+    public int stiltLevel = 0;
+    public float heightPerStilt = 0.5f;
+    public float stiltChangeSpeed = 15f;
+    public Transform stiltVisual;
+    private float targetY;
+    private Vector3 initialStiltScale;
+
+    // 【新增】磁铁道具参数
+    [Header("磁铁道具")]
+    public float magnetDuration = 10f; // 磁铁持续时间
+    public float magnetRadius = 8f;   // 磁铁吸引半径
+    public float itemAttractionSpeed = 20f; // 道具飞向玩家的速度
+    private bool isMagnetActive = false; // 磁铁是否激活
+    private float magnetTimer; // 磁铁计时器
 
     [Header("UI组件")]
-    public TextMeshProUGUI rest_text; // 【建议】改为public，在Inspector中拖拽赋值
-    public TextMeshProUGUI score_text; // 【建议】改为public，在Inspector中拖拽赋值
-    public Text stilt_text; // 【新增】用于显示高跷层数的UI Text
+    public TextMeshProUGUI rest_text;
+    public TextMeshProUGUI score_text;
+    public Text stilt_text;
 
     [Header("游戏结束设置")]
     public EndPanel endPanelManager;
@@ -41,28 +48,25 @@ public class NewPlayer : MonoBehaviour
     {
         m_transform = this.transform;
         targetX = m_transform.position.x;
-        targetY = m_transform.position.y; // 初始化目标高度
+        targetY = m_transform.position.y;
 
-        // 【新增】高跷初始化
         if (stiltVisual != null)
         {
             initialStiltScale = stiltVisual.localScale;
-            stiltVisual.gameObject.SetActive(false); // 游戏开始时隐藏高跷
+            stiltVisual.gameObject.SetActive(false);
         }
         else
         {
             Debug.LogError("请在Inspector中设置玩家的 stiltVisual 对象！");
         }
 
-        // 初始化UI显示
         UpdateScoreUI();
         UpdateHealthUI();
-        UpdateStiltUI(); // 【新增】
+        UpdateStiltUI();
     }
 
     void OnTriggerEnter(Collider coll)
     {
-        // --- 拾取高跷道具 ---
         if (coll.gameObject.CompareTag("Stilts"))
         {
             SFXManager.Instance.PlaySound("pick");
@@ -70,7 +74,6 @@ public class NewPlayer : MonoBehaviour
             UpdateStiltState();
             Destroy(coll.gameObject);
         }
-        // --- 与低障碍物碰撞 ---
         else if (coll.gameObject.CompareTag("LowObstacle"))
         {
             if (stiltLevel > 0)
@@ -86,7 +89,6 @@ public class NewPlayer : MonoBehaviour
                 Debug.Log("没有高跷，碰到了低障碍物，受到伤害！");
             }
         }
-        // --- 得分 ---
         else if (coll.gameObject.CompareTag("Item"))
         {
             SFXManager.Instance.PlaySound("pick");
@@ -94,7 +96,6 @@ public class NewPlayer : MonoBehaviour
             UpdateScoreUI();
             Destroy(coll.gameObject);
         }
-        // --- 回血 ---
         else if (coll.gameObject.CompareTag("Heal"))
         {
             SFXManager.Instance.PlaySound("pick");
@@ -102,20 +103,24 @@ public class NewPlayer : MonoBehaviour
             UpdateHealthUI();
             Destroy(coll.gameObject);
         }
-        // --- 普通障碍物 ---
+        // 【新增】拾取磁铁道具
+        else if (coll.gameObject.CompareTag("Magnet"))
+        {
+            SFXManager.Instance.PlaySound("pick"); // 可以换个独特的音效
+            ActivateMagnet();
+            Destroy(coll.gameObject);
+        }
         else if (coll.gameObject.CompareTag("damage"))
         {
             TakeDamage();
         }
-        // --- 【重点修正】终点线逻辑 ---
         else if (coll.gameObject.CompareTag(finishLineTag))
         {
-            Debug.Log("玩家到达终点!"); // 添加一个日志方便调试
+            Debug.Log("玩家到达终点!");
             if (endPanelManager != null)
             {
-                // 调用EndPanel脚本中的方法，并传入false表示这不是失败
-                endPanelManager.TriggerEndSequence(false); 
-                this.enabled = false; // 禁用玩家移动脚本，让玩家停下来
+                endPanelManager.TriggerEndSequence(false);
+                this.enabled = false;
             }
             else
             {
@@ -124,10 +129,9 @@ public class NewPlayer : MonoBehaviour
         }
     }
 
-    // 【新增】一个统一的受伤函数，方便调用
     void TakeDamage()
     {
-        SFXManager.Instance.PlaySound("hit"); // 播放受伤音效
+        SFXManager.Instance.PlaySound("hit");
         Debug.Log("玩家受到伤害！");
         current_health--;
         UpdateHealthUI();
@@ -158,44 +162,74 @@ public class NewPlayer : MonoBehaviour
         }
 
         // --- 玩家位置更新 ---
-        // 1. 计算目标X轴位置
         targetX = (currentLane - 1) * laneDistance;
-
-        // 2. 平滑地更新水平和垂直位置 (使用Lerp)
         Vector3 newPosition = m_transform.position;
         newPosition.x = Mathf.Lerp(newPosition.x, targetX, Time.deltaTime * laneChangeSpeed);
-        newPosition.y = Mathf.Lerp(newPosition.y, targetY, Time.deltaTime * stiltChangeSpeed); // 【修改】平滑更新Y轴
+        newPosition.y = Mathf.Lerp(newPosition.y, targetY, Time.deltaTime * stiltChangeSpeed);
         m_transform.position = newPosition;
-
-        // 3. 持续向前移动
         m_transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
+
+        // 【新增】在Update中持续处理磁铁效果
+        HandleMagnet();
+    }
+    
+    // 【新增】激活磁铁的方法
+    void ActivateMagnet()
+    {
+        isMagnetActive = true;
+        magnetTimer = magnetDuration;
+        Debug.Log("磁铁已激活！");
+        // 在这里可以添加激活磁铁时的视觉效果（如玩家身上出现一个光环）和音效
+    }
+    
+    // 【新增】处理磁铁效果的核心逻辑
+    void HandleMagnet()
+    {
+        // 如果磁铁未激活，直接返回
+        if (!isMagnetActive)
+        {
+            return;
+        }
+
+        // 磁铁计时
+        magnetTimer -= Time.deltaTime;
+        if (magnetTimer <= 0)
+        {
+            isMagnetActive = false;
+            Debug.Log("磁铁效果结束。");
+            // 在这里可以移除磁铁的视觉效果
+            return;
+        }
+
+        // 使用OverlapSphere检测半径内的所有碰撞体
+        Collider[] hitColliders = Physics.OverlapSphere(m_transform.position, magnetRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            // 尝试获取碰撞体上的CollectibleItem脚本
+            if (hitCollider.TryGetComponent<CollectibleItem>(out CollectibleItem item))
+            {
+                // 如果找到了，就命令它飞向玩家
+                item.StartFollowingPlayer(m_transform, itemAttractionSpeed);
+            }
+        }
     }
 
     void UpdateStiltState()
     {
-        // 1. 计算玩家新的目标Y轴高度 (这部分不变)
         targetY = 1f + stiltLevel * heightPerStilt;
-
-        // 2. 更新高跷视觉模型 (现在是更新 StiltPivot)
         if (stiltLevel > 0)
         {
             stiltVisual.gameObject.SetActive(true);
-            
-            float totalStiltHeight = targetY; 
-
+            float totalStiltHeight = targetY;
             stiltVisual.localScale = new Vector3(initialStiltScale.x, totalStiltHeight, initialStiltScale.z);
-
         }
         else
         {
             stiltVisual.gameObject.SetActive(false);
         }
-
-        // 3. 更新UI (不变)
         UpdateStiltUI();
     }
 
-    // --- UI更新函数 ---
     void UpdateScoreUI()
     {
         if (score_text != null) score_text.text = "Score: " + current_score.ToString();
@@ -204,7 +238,6 @@ public class NewPlayer : MonoBehaviour
     {
         if (rest_text != null) rest_text.text = "Health: " + current_health.ToString();
     }
-    
     void UpdateStiltUI()
     {
         if (stilt_text != null) stilt_text.text = "高跷高度: " + stiltLevel.ToString();

@@ -11,6 +11,7 @@ TagManager:
   - FinishLine
   - Stilts
   - LowObstacle
+  - Magnet
   layers:
   - Default
   - TransparentFX
