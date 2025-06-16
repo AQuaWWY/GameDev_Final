@@ -48,7 +48,7 @@ public class picker : MonoBehaviour
         }
         else if (randomValue < 80) // 10% 的概率生成 prefabs[2] (回血)
         {
-            prefabToSpawn = prefabs[1];
+            prefabToSpawn = prefabs[2];
         }
         else if (randomValue < 90) // 10% 的概率生成 prefabs[3] (高跷道具)
         {

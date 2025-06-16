@@ -80,10 +80,10 @@ public class EndPanel : MonoBehaviour
         {
             SceneManager.LoadScene("lv2");
         }
-        //else if (s.name == "lv2")
-        //{
-        //    SceneManager.LoadScene("lv3");
-        //}
+        else if (s.name == "lv2")
+        {
+            SceneManager.LoadScene("lv3");
+        }
         else
         {
             SceneManager.LoadScene("lv1");
