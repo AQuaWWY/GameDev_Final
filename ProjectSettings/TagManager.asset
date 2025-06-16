@@ -12,6 +12,7 @@ TagManager:
   - Stilts
   - LowObstacle
   - Magnet
+  - Item_double
   layers:
   - Default
   - TransparentFX
