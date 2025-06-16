@@ -854,6 +854,7 @@ MonoBehaviour:
   - {fileID: 4053618251284039819, guid: ed235f848cd157843bd8721c3d35d65a, type: 3}
   - {fileID: 3177456697050129281, guid: 7c8b04c41a267f946833327974977f98, type: 3}
   - {fileID: 7484748871229524640, guid: 130d5d66d99423b4d89defa7d656f5ff, type: 3}
+  - {fileID: 14822205092767313, guid: ffd7744df7502314b94e03bbaf79fbe5, type: 3}
   spawnInterval: 0.4
   laneDistance: 5
   spawnAheadDistance: 30

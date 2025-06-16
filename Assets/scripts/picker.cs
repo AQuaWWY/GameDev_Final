@@ -6,7 +6,7 @@ public class picker : MonoBehaviour
 {
     [Header("生成设置")]
     // 【修改】更新注释，让它更清晰
-    public GameObject[] prefabs; // (0:得分, 1:回血, 2:高障碍物, 3:高跷道具, 4:低障碍物，5：磁铁)
+    public GameObject[] prefabs; // (0:得分, 1:双倍, 2:回血, 3:高跷道具, 4:低障碍物，5：磁铁)
     public float spawnInterval = 0.5f;
 
     [Header("跑道设置")]
@@ -42,26 +42,34 @@ public class picker : MonoBehaviour
         {
             prefabToSpawn = prefabs[0];
         }
-        else if (randomValue < 70) // 10% 的概率生成 prefabs[1] (回血)
+        else if (randomValue < 70) // 10% 的概率生成 prefabs[1] (双倍)
         {
             prefabToSpawn = prefabs[1];
         }
-        else if (randomValue < 80) // 10% 的概率生成 prefabs[3] (高跷道具)
+        else if (randomValue < 80) // 10% 的概率生成 prefabs[2] (回血)
+        {
+            prefabToSpawn = prefabs[1];
+        }
+        else if (randomValue < 90) // 10% 的概率生成 prefabs[3] (高跷道具)
         {
             // 确保 prefabs 数组足够大
             if (prefabs.Length > 3) prefabToSpawn = prefabs[3];
             else prefabToSpawn = prefabs[0]; // 如果没设置，就生成金币作为后备
         }
-        else if (randomValue < 90) // 10% 的概率生成 prefabs[4] (低障碍物)
+        else if (randomValue < 95) // 5% 的概率生成 prefabs[4] (低障碍物)
         {
             // 确保 prefabs 数组足够大
             if (prefabs.Length > 4) prefabToSpawn = prefabs[4];
             else prefabToSpawn = prefabs[2]; // 如果没设置，就生成高障碍物
         }
-        else // 10% 的概率生成 prefabs[2] (高障碍物)
+        else  // 5% 的概率生成 prefabs[5] (磁铁)
         {
-            prefabToSpawn = prefabs[2];
+            prefabToSpawn = prefabs[5];
         }
+        //else // 10% 的概率生成 prefabs[2] (高障碍物)
+        //{
+        //    prefabToSpawn = prefabs[2];
+        //}
 
         // --- 2. 随机选择一条跑道 ---
         int randomLaneIndex = Random.Range(0, 3);
