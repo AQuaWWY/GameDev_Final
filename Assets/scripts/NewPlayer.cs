@@ -224,6 +224,8 @@ public class NewPlayer : MonoBehaviour
     void UpdateStiltState()
     {
         targetY = 1f + stiltLevel * heightPerStilt;
+        //targetY = stiltLevel * heightPerStilt;
+
         if (stiltLevel > 0)
         {
             stiltVisual.gameObject.SetActive(true);
