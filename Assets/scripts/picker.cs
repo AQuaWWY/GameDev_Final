@@ -6,7 +6,7 @@ public class picker : MonoBehaviour
 {
     [Header("生成设置")]
     // 【修改】更新注释，让它更清晰
-    public GameObject[] prefabs; // (0:得分, 1:回血, 2:高障碍物, 3:高跷道具, 4:低障碍物)
+    public GameObject[] prefabs; // (0:得分, 1:回血, 2:高障碍物, 3:高跷道具, 4:低障碍物，5：磁铁)
     public float spawnInterval = 0.5f;
 
     [Header("跑道设置")]

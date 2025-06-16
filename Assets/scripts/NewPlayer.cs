@@ -96,6 +96,13 @@ public class NewPlayer : MonoBehaviour
             UpdateScoreUI();
             Destroy(coll.gameObject);
         }
+        else if (coll.gameObject.CompareTag("Item_double"))
+        {
+            SFXManager.Instance.PlaySound("pick");
+            current_score*=2;
+            UpdateScoreUI();
+            Destroy(coll.gameObject);
+        }
         else if (coll.gameObject.CompareTag("Heal"))
         {
             SFXManager.Instance.PlaySound("pick");
