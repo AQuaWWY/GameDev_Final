@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; // 需要这个来进行场景管理 (如重新加载场景)
 
 public class NewPlayer : MonoBehaviour
 {
@@ -44,11 +45,15 @@ public class NewPlayer : MonoBehaviour
     public EndPanel endPanelManager;
     public string finishLineTag = "FinishLine";
 
+    
+
     void Start()
     {
         m_transform = this.transform;
         targetX = m_transform.position.x;
         targetY = m_transform.position.y;
+
+        
 
         if (stiltVisual != null)
         {
@@ -156,6 +161,8 @@ public class NewPlayer : MonoBehaviour
 
     void Update()
     {
+        Scene s = SceneManager.GetActiveScene();
+
         // --- 跑道切换输入检测 ---
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && currentLane > 0)
         {
@@ -173,6 +180,13 @@ public class NewPlayer : MonoBehaviour
         Vector3 newPosition = m_transform.position;
         newPosition.x = Mathf.Lerp(newPosition.x, targetX, Time.deltaTime * laneChangeSpeed);
         newPosition.y = Mathf.Lerp(newPosition.y, targetY, Time.deltaTime * stiltChangeSpeed);
+        if(s.name == "endless")
+        {
+            if(m_transform.position.z > 300f)
+            {
+                newPosition.z = 100f;
+            }
+        }
         m_transform.position = newPosition;
         m_transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
 

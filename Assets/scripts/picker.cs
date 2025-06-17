@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class picker : MonoBehaviour
 {
@@ -122,7 +123,13 @@ public class picker : MonoBehaviour
 
 
         // --- 4. 实例化预制体 ---
+        Scene s = SceneManager.GetActiveScene();
+
         Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-        Instantiate(prefabToSpawn_1, spawnPosition_1, Quaternion.identity);
+        if(s.name == "endless")
+        {
+            Instantiate(prefabToSpawn_1, spawnPosition_1, Quaternion.identity);
+        }
+
     }
 }
