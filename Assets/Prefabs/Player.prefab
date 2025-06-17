@@ -272,7 +272,7 @@ MonoBehaviour:
   current_score: 0
   current_health: 3
   stiltLevel: 0
-  heightPerStilt: 0.5
+  heightPerStilt: 1
   stiltChangeSpeed: 15
   stiltVisual: {fileID: 7172797504446291217}
   magnetDuration: 10
