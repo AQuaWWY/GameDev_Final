@@ -84,6 +84,10 @@ public class EndPanel : MonoBehaviour
         {
             SceneManager.LoadScene("lv3");
         }
+        else if (s.name == "lv3")
+        {
+            SceneManager.LoadScene("lv4");
+        }
         else
         {
             SceneManager.LoadScene("lv1");
