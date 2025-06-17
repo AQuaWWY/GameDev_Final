@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+//using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement; // 需要这个来进行场景管理 (如重新加载场景)
 
 public class item : MonoBehaviour
 {
@@ -19,9 +21,13 @@ public class item : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        if (transform.position.z > obj.transform.position.z + 150f)
+        Scene s = SceneManager.GetActiveScene();
+        if (s.name == "endless")
         {
-            Destroy(this.gameObject);
+            if (transform.position.z > obj.transform.position.z + 150f)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
