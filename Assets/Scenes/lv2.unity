@@ -984,6 +984,9 @@ MonoBehaviour:
   - {fileID: 3177456697050129281, guid: 7c8b04c41a267f946833327974977f98, type: 3}
   - {fileID: 7484748871229524640, guid: 130d5d66d99423b4d89defa7d656f5ff, type: 3}
   - {fileID: 14822205092767313, guid: ffd7744df7502314b94e03bbaf79fbe5, type: 3}
+  prefabs_damage:
+  - {fileID: 7121666830674445140, guid: c4081ea1d5336d34da705b411205ac0d, type: 3}
+  - {fileID: 7484748871229524640, guid: 130d5d66d99423b4d89defa7d656f5ff, type: 3}
   spawnInterval: 0.4
   laneDistance: 5
   spawnAheadDistance: 30
