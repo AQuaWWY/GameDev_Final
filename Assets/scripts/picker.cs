@@ -96,7 +96,7 @@ public class picker : MonoBehaviour
         float spawnX = (randomLaneIndex - 1) * laneDistance;
         float spawnZ = player.transform.position.z + spawnAheadDistance + Random.Range(-spawnZRange / 2, spawnZRange / 2);
         float spawnX_1 = (randomLaneIndex_1 - 1) * laneDistance;
-        float spawnZ_1 = player.transform.position.z + spawnAheadDistance + Random.Range(-spawnZRange / 2, spawnZRange / 2);
+        float spawnZ_1 = player.transform.position.z + spawnAheadDistance + 30f + Random.Range(-spawnZRange / 2, spawnZRange / 2);
 
         // 【修改】让生成位置的Y轴更智能
         // 假设所有道具和障碍物的中心点都在模型底部
@@ -114,7 +114,7 @@ public class picker : MonoBehaviour
         }
         else if (prefabToSpawn_1.CompareTag("damage"))
         {
-            spawnY_1 = 1f; // 高障碍物可以高一点
+            spawnY_1 = -31f; // 高障碍物可以高一点
         }
 
         Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
