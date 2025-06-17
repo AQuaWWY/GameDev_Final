@@ -8,8 +8,8 @@ public class NewPlayer : MonoBehaviour
 {
     [Header("玩家移动参数")]
     public float laneChangeSpeed = 10f;
-    public float forwardSpeed = 5f;
-    public float laneDistance = 2.5f;
+    public float forwardSpeed = 513f;
+    public float laneDistance = 5f;
 
     private Transform m_transform;
     private int currentLane = 1;

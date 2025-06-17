@@ -9,7 +9,7 @@ public class item : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = GameObject.Find("Temp_man");
+        obj = GameObject.Find("Player");
     }
 
     // Update is called once per frame
