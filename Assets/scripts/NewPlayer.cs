@@ -36,8 +36,8 @@ public class NewPlayer : MonoBehaviour
     private float magnetTimer; // 磁铁计时器
 
     [Header("UI组件")]
-    public TextMeshProUGUI rest_text;
-    public TextMeshProUGUI score_text;
+    public Text rest_text;
+    public Text score_text;
     public Text stilt_text;
 
     [Header("游戏结束设置")]
@@ -241,11 +241,11 @@ public class NewPlayer : MonoBehaviour
 
     void UpdateScoreUI()
     {
-        if (score_text != null) score_text.text = "Score: " + current_score.ToString();
+        if (score_text != null) score_text.text = "分数: " + current_score.ToString();
     }
     void UpdateHealthUI()
     {
-        if (rest_text != null) rest_text.text = "Health: " + current_health.ToString();
+        if (rest_text != null) rest_text.text = "生命值: " + current_health.ToString();
     }
     void UpdateStiltUI()
     {
