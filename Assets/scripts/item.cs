@@ -15,7 +15,11 @@ public class item : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.z < obj.transform.position.z - 5f)
+        if (transform.position.z < obj.transform.position.z - 10f)
+        {
+            Destroy(this.gameObject);
+        }
+        if (transform.position.z > obj.transform.position.z + 150f)
         {
             Destroy(this.gameObject);
         }

@@ -128,8 +128,11 @@ public class picker : MonoBehaviour
         Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         if(s.name == "endless")
         {
-            Instantiate(prefabToSpawn_1, spawnPosition_1, Quaternion.identity);
+            int randomValue_to_spawn = Random.Range(0, 100);
+            if(randomValue_to_spawn < 70)
+            {
+                Instantiate(prefabToSpawn_1, spawnPosition_1, Quaternion.identity);
+            }           
         }
-
     }
 }

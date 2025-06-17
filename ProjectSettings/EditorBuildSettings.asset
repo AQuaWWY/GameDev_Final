@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/lv4.unity
     guid: a66058e5b3b7dbe4ba585bdbefbd71bc
+  - enabled: 1
+    path: Assets/Scenes/endless.unity
+    guid: 57d77243cd4572b4c8bd8df726bf85ad
   m_configObjects: {}
